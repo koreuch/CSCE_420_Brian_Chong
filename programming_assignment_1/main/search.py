@@ -21,6 +21,8 @@ from builtins import object
 import util
 import os
 
+import heapq
+
 def tiny_maze_search(problem):
     """
     Returns a sequence of moves that solves tiny_maze.  For any other maze, the
@@ -66,6 +68,7 @@ def heuristic1(state, problem=None):
     # 
     # heuristic for the find-the-goal problem
     # 
+    # print(state)
     if isinstance(problem, SearchProblem):
         # data
         pacman_x, pacman_y = state
@@ -80,31 +83,48 @@ def heuristic1(state, problem=None):
     # 
     elif isinstance(problem, FoodSearchProblem):
         # the state includes a grid of where the food is
+        # print(state[1].count())
+        # return 0
+        # problem.heuristic_info['count'] += 1
         position, food_grid = state
         pacman_x, pacman_y = position
-        
-        has_food_at_0_0 = food_grid[0][0]
-        if has_food_at_0_0:
-            print("there's food at 0,0")
+        # travel_spaces = food_grid.width * food_grid.height
+        # if (state[1].count() < 25):
+        # print(state[1].count())
+        # if (problem.heuristic_info['count'] == 200):
+        #     print(state[1].count())
+        #     print(position)
+        #     problem.heuristic_info['count'] = 0
+        # print("INFO")
+        # print(problem.get_start_state())
+        # print(food_grid.width, "Here is the width")
+        # print(food_grid.height, "Here is the height")
+        # print(food_grid.height / 2, "I can use this for half height")
+        # print(food_grid.width / 2, "I can use this for half width")
+        # return 0
+
+        pellet_percent = float(state[1].count()) / float(problem.heuristic_info['pellet_count'])
+        # print("percentage", pellet_percent)
+
+        # if food_grid[pacman_x][pacman_y]:
+        #     # print("found here", food_grid[pacman_x][pacman_y])
+        #     return state[1].count() - 1
+        # elif food_grid[pacman_x-1][pacman_y] or food_grid[pacman_x+1][pacman_y] or food_grid[pacman_x][pacman_y-1] or food_grid[pacman_x][pacman_y+1]:
+        #     return state[1].count()
+        # else:
+        #     return state[1].count() + 1\
+
+        return (food_grid.width * food_grid.height * pellet_percent)
         
         # YOUR CODE HERE (set value of optimisitic_number_of_steps_to_goal)
         
         optimisitic_number_of_steps_to_goal = 0
         return optimisitic_number_of_steps_to_goal
 
-def a_star_search(problem, heuristic=heuristic1):
-    """Search the node that has the lowest combined cost and heuristic first."""
-    "*** YOUR CODE HERE ***"
-    
-    # What does this function need to return?
-    #     list of actions that reaches the goal
-    # 
-    # What data is available?
-    #     start_state = problem.get_start_state() # returns a string
-    # 
-    #     problem.is_goal_state(start_state) # returns boolean
-    # 
-    #     transitions = problem.get_successors(start_state)
+
+
+#   
+    # transitions = problem.get_successors(start_state)
     #     transitions[0].state
     #     transitions[0].action
     #     transitions[0].cost
@@ -116,14 +136,74 @@ def a_star_search(problem, heuristic=heuristic1):
     #         [ "D", "2:A->D", 4.0, ],
     #     ]
     # 
-    # Example:
-    #     start_state = problem.get_start_state()
-    #     transitions = problem.get_successors(start_state)
-    #     example_path = [  transitions[0].action  ]
-    #     path_cost = problem.get_cost_of_actions(example_path)
-    #     return example_path
-    
-    util.raise_not_defined()
+    # start_state = problem.get_start_state()
+    # transitions = problem.get_successors(start_state)
+    # print("These are the transitions")
+    # for transition in transitions:
+    #     print("Transition:")
+    #     print(transition)
+    # print("\nThese are the start state printed out")
+    # print(start_state)
+    # # Example:
+    # #     start_state = problem.get_start_state()
+    # #     transitions = problem.get_successors(start_state)
+    # #     example_path = [  transitions[0].action  ]
+    # #     path_cost = problem.get_cost_of_actions(example_path)
+    # #     return example_path
+    # heuristic(problem)
+    # util.raise_not_defined()
+    #
+    #above is notes for a star
+def a_star_search(problem, heuristic=heuristic1):
+    """Search the node that has the lowest combined cost and heuristic first."""
+    "*** YOUR CODE HERE ***"
+
+    # problem.heuristic_info['count'] = 1
+#state[1].count()
+    start_state = problem.get_start_state() # returns a string
+    start_node = {"state": start_state, "cost":0, "sequence": [] }
+    # print(str(problem))
+    # print("used this")
+    #base case above
+    frontier = []
+    entry_count = 0 # priorities that are equal will lead to error with heapq. This mitigates that
+
+    #This was for the test cases, since the food search problem I use problem.heuristic_info dictionary
+    if (str(type(problem)) == "<class \'search_agents.FoodSearchProblem\'>"):
+        pellet_count = (problem.get_successors(start_state))[0].state[1].count()
+        # print("here it is")
+        # print(type(problem))
+        problem.heuristic_info['pellet_count'] = pellet_count
+
+    heapq.heappush(frontier, (0, entry_count, start_node))
+    explored = {}
+    entry_count += 1
+    explored[start_node["state"]] = 0
+    depth = 1
+    exploredNodes = []
+    while len(frontier) != 0:
+        node = frontier[0][2]
+        # print("Exploring node", node["state"], " with cost: ", frontier[0][0])
+        # print(frontier)
+        heapq.heappop(frontier)
+        if problem.is_goal_state(node["state"]):
+            return node["sequence"]
+
+        transitions = problem.get_successors(node["state"])
+        for transition in transitions:
+            child_node = {"state": transition.state, "cost": node["cost"] + transition.cost, "sequence": node["sequence"] + [transition.action] }
+            # if (transition.state) in explored:
+            if (transition.state not in explored) or (explored[transition.state] > child_node["cost"]):
+
+                # print("adding to frontier: ", (node["cost"] + 1), "for state", child_node["state"])
+
+                #for the push, we apply the heuristic for prioirty
+                heapq.heappush(frontier, (child_node["cost"] + heuristic(child_node["state"], problem), entry_count, child_node))
+                entry_count += 1
+                explored[transition.state] = child_node["cost"]
+        # print(len(frontier))
+    print("This part shouldn't be reached")
+    return []
 
 
 # (you can ignore this, although it might be helpful to know about)

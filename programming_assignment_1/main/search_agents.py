@@ -84,11 +84,16 @@ class SearchAgent(Agent):
         # Get the search function from the name and heuristic
         if fn not in dir(search):
             raise_(AttributeError, fn + " is not a search function in search.py.")
+            print("NUMBER" + str(1))
         func = getattr(search, fn)
         if "heuristic" not in func.__code__.co_varnames:
+            # print("heuristic is " + str(heuristic))
             print("[SearchAgent] using function " + fn)
             self.search_function = func
+            # print("NUMBER" + str(2))
         else:
+            # print("heuristic is " + str(heuristic))
+            # print("NUMBER" + str(3))
             if heuristic in list(globals().keys()):
                 heur = globals()[heuristic]
             elif heuristic in dir(search):
@@ -110,6 +115,7 @@ class SearchAgent(Agent):
 
         # Get the search problem type from the name
         if prob not in list(globals().keys()) or not prob.endswith("Problem"):
+            print("NUMBER" + str(4))
             raise_(
                 AttributeError,
                 prob + " is not a search problem type in SearchAgents.py.",
@@ -126,6 +132,7 @@ class SearchAgent(Agent):
 
         state: a GameState object (pacman.py)
         """
+        # print("HERE IS THE SEARCH FUNCTION USED" + str(type(self.search_function)))
         if self.search_function == None:
             raise Exception("No search function provided for SearchAgent")
         starttime = time.time()
