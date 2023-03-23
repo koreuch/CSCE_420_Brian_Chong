@@ -1,0 +1,99 @@
+Tic-Tac-Toe
+
+. . . 
+. . . 
+. . . 
+> ['MOVE', 'x', 'a', '2']
+Row and column are : 
+
+. X . 
+. . . 
+. . . 
+> CHOOSE: O
+move ( A 1 ) mm-score: 0
+move ( A 3 ) mm-score: 0
+move ( B 1 ) mm-score: -0.29999999999999993
+move ( B 2 ) mm-score: 0
+move ( B 3 ) mm-score: -0.29999999999999993
+move ( C 1 ) mm-score: -0.29999999999999993
+move ( C 2 ) mm-score: 0
+move ( C 3 ) mm-score: -0.29999999999999993
+Number of nodes searched:  29592
+
+O X . 
+. . . 
+. . . 
+> CHOOSE: X
+move ( A 3 ) mm-score: -0.19999999999999996
+move ( B 1 ) mm-score: 0
+move ( B 2 ) mm-score: 0
+move ( B 3 ) mm-score: -0.19999999999999996
+move ( C 1 ) mm-score: 0
+move ( C 2 ) mm-score: -0.19999999999999996
+move ( C 3 ) mm-score: 0
+Number of nodes searched:  3938
+
+O X . 
+X . . 
+. . . 
+> CHOOSE: O
+move ( A 3 ) mm-score: -0.29999999999999993
+move ( B 2 ) mm-score: 0
+move ( B 3 ) mm-score: 0
+move ( C 1 ) mm-score: -0.29999999999999993
+move ( C 2 ) mm-score: 0
+move ( C 3 ) mm-score: -0.29999999999999993
+Number of nodes searched:  632
+
+O X . 
+X O . 
+. . . 
+> CHOOSE: X
+move ( A 3 ) mm-score: -0.3999999999999999
+move ( B 3 ) mm-score: -0.3999999999999999
+move ( C 1 ) mm-score: -0.3999999999999999
+move ( C 2 ) mm-score: -0.3999999999999999
+move ( C 3 ) mm-score: 0
+Number of nodes searched:  100
+
+O X . 
+X O . 
+. . X 
+> CHOOSE: O
+move ( A 3 ) mm-score: 0
+move ( B 3 ) mm-score: 0
+move ( C 1 ) mm-score: 0
+move ( C 2 ) mm-score: 0
+Number of nodes searched:  24
+
+O X O 
+X O . 
+. . X 
+> CHOOSE: X
+move ( B 3 ) mm-score: -0.19999999999999996
+move ( C 1 ) mm-score: 0
+move ( C 2 ) mm-score: -0.19999999999999996
+Number of nodes searched:  6
+
+O X O 
+X O . 
+X . X 
+> CHOOSE: O
+move ( B 3 ) mm-score: -0.09999999999999998
+move ( C 2 ) mm-score: 0
+Number of nodes searched:  2
+
+O X O 
+X O . 
+X O X 
+> CHOOSE: X
+move ( B 3 ) mm-score: 0
+Number of nodes searched:  1
+
+O X O 
+X O X 
+X O X 
+Game Finished: Tie
+
+
+Do you want to play again (y/n):

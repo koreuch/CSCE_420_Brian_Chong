@@ -1,0 +1,21 @@
+For the game without pruning
+Number of nodes searched:  255168
+Number of nodes searched:  27732
+Number of nodes searched:  3468
+Number of nodes searched:  457
+Number of nodes searched:  94
+Number of nodes searched:  21
+Number of nodes searched:  6
+Number of nodes searched:  2
+Number of nodes searched:  1
+
+For the game with pruning
+Number of nodes searched:  8453
+Number of nodes searched:  1113
+Number of nodes searched:  346
+Number of nodes searched:  31
+Number of nodes searched:  26
+Number of nodes searched:  7
+Number of nodes searched:  4
+Number of nodes searched:  2
+Number of nodes searched:  1
